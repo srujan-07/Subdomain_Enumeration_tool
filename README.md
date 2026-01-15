@@ -468,3 +468,35 @@ For issues, questions, or feature requests:
 ---
 
 **Happy hunting! 🔍**
+
+---
+
+## QA Bug & Hygiene Discovery Engine (Playwright)
+
+An autonomous AI-driven web testing engine that crawls a site, loads each HTTP 200 page in Chromium via Playwright, and produces a JSON hygiene report with detected issues, page classification, and a global score.
+
+### Install (QA engine only)
+```bash
+pip install -r qa_engine/requirements.txt
+python -m playwright install chromium
+```
+
+### Run
+```bash
+python qa_engine/main.py https://example.com \
+   -o qa_report.json \
+   --max-pages 50 \
+   --concurrency 10 \
+   --browser-concurrency 3
+```
+
+### What it does
+- Crawls internal links (httpx + BeautifulSoup) and keeps HTTP 200 HTML pages.
+- For each page: Playwright captures DOM snapshot, console logs, network failures, performance metrics, accessibility tree.
+- Structural analysis: header/footer/nav presence, repeated classes, simple broken link/image heuristics.
+- Page classification: login, dashboard, list, form, wizard, report (DOM heuristics).
+- Issue detection: JS errors, failed requests, missing structural elements, broken links/images, slow loads, heavy DOM, accessibility/name gaps, placeholder text.
+- Knowledge graph: Page → Issues; hygiene scoring (base 100 minus severity weights) plus global score.
+
+### Output
+- JSON at the path you choose (default `qa_report.json`) with per-page summaries, issues, scores, and global hygiene score.

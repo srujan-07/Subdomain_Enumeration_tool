@@ -75,7 +75,8 @@ class BrowserAnalyzer:
 
         # Performance metrics (navigation entry)
         perf_entry = await page.evaluate(
-            "() => {
+            """
+            () => {
                 const nav = performance.getEntriesByType('navigation')[0] || {};
                 const paint = performance.getEntriesByType('paint');
                 return {
@@ -83,18 +84,21 @@ class BrowserAnalyzer:
                     paint,
                     timing: performance.timing || {},
                 };
-            }"
+            }
+            """
         )
 
         # Basic page metrics
         dom_metrics = await page.evaluate(
-            "() => ({
+            """
+            () => ({
                 nodeCount: document.getElementsByTagName('*').length,
                 inputCount: document.querySelectorAll('input,select,textarea').length,
                 buttonCount: document.querySelectorAll('button,[role="button"],input[type="submit"]').length,
                 imgCount: document.querySelectorAll('img').length,
                 linkCount: document.querySelectorAll('a').length,
-            })"
+            })
+            """
         )
 
         # Accessibility tree

@@ -7,6 +7,9 @@ from .page_classifier import PageClassifier
 from .issue_detector import IssueDetector
 from .graph_builder import GraphBuilder
 from .scorer import Scorer
+from .url_validator import URLValidator
+from .events import EventBus, EventType, QAEvent, create_event, event_bus
+from .orchestrator import QAOrchestrator
 
 __all__ = [
     "Crawler",
@@ -16,4 +19,11 @@ __all__ = [
     "IssueDetector",
     "GraphBuilder",
     "Scorer",
+    "URLValidator",
+    "EventBus",
+    "EventType",
+    "QAEvent",
+    "create_event",
+    "event_bus",
+    "QAOrchestrator",
 ]
